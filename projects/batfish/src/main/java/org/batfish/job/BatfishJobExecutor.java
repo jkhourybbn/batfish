@@ -7,6 +7,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.batfish.common.BatfishException;
@@ -122,7 +124,12 @@ public class BatfishJobExecutor {
         JobResultT result = null;
         try {
           // getting the result of the job
-          result = completionService.take().get();
+          Future<JobResultT> future = completionService.poll(30000L, TimeUnit.MILLISECONDS);
+          if (future == null) {
+            throw new BatfishTimeoutException("Took too long");
+          } else {
+            result = future.get();
+          }
         } catch (InterruptedException e) {
           throw new BatfishException("Job didn't finish", e);
         } catch (ExecutionException e) {
