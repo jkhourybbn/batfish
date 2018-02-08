@@ -85,7 +85,7 @@ public class BatfishANTLRErrorStrategy extends DefaultErrorStrategy {
       int separatorToken, String minimumRequiredSeparatorText, String text) {
     _lines =
         Collections.unmodifiableList(
-            Arrays.asList(text.split(Pattern.quote(minimumRequiredSeparatorText))));
+            Arrays.asList(text.split(Pattern.quote(minimumRequiredSeparatorText), -1)));
     _separatorToken = separatorToken;
   }
 
@@ -135,6 +135,9 @@ public class BatfishANTLRErrorStrategy extends DefaultErrorStrategy {
    */
   private Token createErrorNode(
       Parser recognizer, ParserRuleContext ctx, int lineIndex, String separator) {
+    if (lineIndex >= _lines.size()) {
+      assert Boolean.TRUE;
+    }
     String lineText = _lines.get(lineIndex) + separator;
     Token lineToken =
         recognizer
