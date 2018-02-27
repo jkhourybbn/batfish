@@ -26,6 +26,7 @@ import org.batfish.datamodel.Configuration;
 import org.batfish.datamodel.ConnectedRoute;
 import org.batfish.datamodel.DataPlane;
 import org.batfish.datamodel.Edge;
+import org.batfish.datamodel.FibTree;
 import org.batfish.datamodel.GeneratedRoute;
 import org.batfish.datamodel.IRib;
 import org.batfish.datamodel.Interface;
@@ -370,5 +371,26 @@ public class BdpDataPlane implements Serializable, DataPlane {
 
   public void setTopology(Topology topology) {
     _topology = topology;
+  }
+
+  @Override
+  public Map<String, Map<String, FibTree>> getFibTrees() {
+    return _nodes
+        .entrySet()
+        .stream()
+        .collect(
+            ImmutableMap.toImmutableMap(
+                Entry::getKey,
+                nodesByHostnameEntry ->
+                    nodesByHostnameEntry
+                        .getValue()
+                        ._virtualRouters
+                        .entrySet()
+                        .stream()
+                        .collect(
+                            ImmutableMap.toImmutableMap(
+                                Entry::getKey,
+                                virtualRoutersByVrfEntry ->
+                                    virtualRoutersByVrfEntry.getValue()._fib.getTree()))));
   }
 }

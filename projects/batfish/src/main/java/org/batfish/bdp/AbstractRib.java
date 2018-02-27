@@ -42,7 +42,7 @@ public abstract class AbstractRib<R extends AbstractRoute> implements IRib<R> {
 
     private static final long serialVersionUID = 1L;
 
-    private RibTreeNode _root;
+    RibTreeNode _root;
 
     RibTree() {
       _root = new RibTreeNode(Prefix.ZERO);
@@ -87,13 +87,13 @@ public abstract class AbstractRib<R extends AbstractRoute> implements IRib<R> {
 
     private static final long serialVersionUID = 1L;
 
-    private RibTreeNode _left;
+    RibTreeNode _left;
 
-    private Prefix _prefix;
+    Prefix _prefix;
 
-    private RibTreeNode _right;
+    RibTreeNode _right;
 
-    private Set<R> _routes;
+    Set<R> _routes;
 
     RibTreeNode(Prefix prefix) {
       _routes = Collections.emptySet();
@@ -392,7 +392,7 @@ public abstract class AbstractRib<R extends AbstractRoute> implements IRib<R> {
 
   protected VirtualRouter _owner;
 
-  private RibTree _tree;
+  RibTree _tree;
 
   private Set<R> _allRoutes;
 

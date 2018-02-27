@@ -17,12 +17,14 @@ public class Fib implements Serializable {
 
   private static final int MAX_DEPTH = 10;
 
-  /** */
   private static final long serialVersionUID = 1L;
 
+  /** route -> nexthopinterface -> nextHopIp -> interfaceRoutes */
   private final Map<AbstractRoute, Map<String, Map<Ip, Set<AbstractRoute>>>> _nextHopInterfaces;
 
   private final Rib _rib;
+
+  private final BdpFibTree _tree;
 
   public Fib(Rib rib) {
     _rib = rib;
@@ -33,6 +35,7 @@ public class Fib implements Serializable {
           route, Route.UNSET_ROUTE_NEXT_HOP_IP, nextHopInterfaces, new HashSet<>(), 0);
       _nextHopInterfaces.put(route, nextHopInterfaces);
     }
+    _tree = new BdpFibTree(rib._tree, _nextHopInterfaces);
   }
 
   private void collectNextHopInterfaces(
@@ -105,5 +108,9 @@ public class Fib implements Serializable {
       nextHopInterfacesByRoute.put(nextHopRoute, nextHopInterfaces);
     }
     return nextHopInterfacesByRoute;
+  }
+
+  public BdpFibTree getTree() {
+    return _tree;
   }
 }

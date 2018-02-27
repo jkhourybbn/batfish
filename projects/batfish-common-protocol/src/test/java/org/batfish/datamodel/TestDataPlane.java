@@ -16,6 +16,8 @@ public class TestDataPlane implements DataPlane {
   public static class Builder {
     private Map<String, Map<String, SortedSet<FibRow>>> _fibs;
 
+    private Map<String, Map<String, FibTree>> _fibTrees;
+
     private Set<NodeInterfacePair> _flowSinks;
 
     private SortedMap<String, SortedMap<String, IRib<AbstractRoute>>> _ribs;
@@ -24,17 +26,23 @@ public class TestDataPlane implements DataPlane {
 
     private Builder() {
       _fibs = ImmutableMap.of();
+      _fibTrees = ImmutableMap.of();
       _flowSinks = ImmutableSet.of();
       _ribs = ImmutableSortedMap.of();
       _topologyEdges = ImmutableSortedSet.of();
     }
 
     public TestDataPlane build() {
-      return new TestDataPlane(_fibs, _flowSinks, _ribs, _topologyEdges);
+      return new TestDataPlane(_fibs, _fibTrees, _flowSinks, _ribs, _topologyEdges);
     }
 
     public Builder setFibs(Map<String, Map<String, SortedSet<FibRow>>> fibs) {
       _fibs = fibs;
+      return this;
+    }
+
+    public Builder setFibTrees(Map<String, Map<String, FibTree>> fibTrees) {
+      _fibTrees = fibTrees;
       return this;
     }
 
@@ -63,6 +71,8 @@ public class TestDataPlane implements DataPlane {
 
   private final Map<String, Map<String, SortedSet<FibRow>>> _fibs;
 
+  private final Map<String, Map<String, FibTree>> _fibTrees;
+
   private final Set<NodeInterfacePair> _flowSinks;
 
   private final SortedMap<String, SortedMap<String, IRib<AbstractRoute>>> _ribs;
@@ -71,10 +81,12 @@ public class TestDataPlane implements DataPlane {
 
   private TestDataPlane(
       Map<String, Map<String, SortedSet<FibRow>>> fibs,
+      Map<String, Map<String, FibTree>> fibTrees,
       Set<NodeInterfacePair> flowSinks,
       SortedMap<String, SortedMap<String, IRib<AbstractRoute>>> ribs,
       SortedSet<Edge> topologyEdges) {
     _fibs = ImmutableMap.copyOf(fibs);
+    _fibTrees = fibTrees;
     _flowSinks = ImmutableSet.copyOf(flowSinks);
     _ribs = ImmutableSortedMap.copyOf(ribs);
     _topologyEdges = ImmutableSortedSet.copyOf(topologyEdges);
@@ -83,6 +95,11 @@ public class TestDataPlane implements DataPlane {
   @Override
   public Map<String, Map<String, SortedSet<FibRow>>> getFibs() {
     return _fibs;
+  }
+
+  @Override
+  public Map<String, Map<String, FibTree>> getFibTrees() {
+    return _fibTrees;
   }
 
   @Override
