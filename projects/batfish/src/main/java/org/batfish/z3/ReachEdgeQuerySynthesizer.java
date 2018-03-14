@@ -64,7 +64,8 @@ public class ReachEdgeQuerySynthesizer extends BaseQuerySynthesizer {
                     new OriginateVrf(_originationNode, _ingressVrf)),
                 new BasicRuleStatement(
                     SaneExpr.INSTANCE,
-                    queryPreconditionPreTransformationStates.build(), Query.INSTANCE)))
+                    queryPreconditionPreTransformationStates.build(),
+                    Query.INSTANCE)))
         .build();
   }
 }

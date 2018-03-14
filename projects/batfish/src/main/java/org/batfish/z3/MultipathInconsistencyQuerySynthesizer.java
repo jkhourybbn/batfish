@@ -44,7 +44,8 @@ public class MultipathInconsistencyQuerySynthesizer extends BaseQuerySynthesizer
                     new OriginateVrf(_hostname, _vrf)),
                 new BasicRuleStatement(
                     SaneExpr.INSTANCE,
-                    ImmutableSet.of(Accept.INSTANCE, Drop.INSTANCE), Query.INSTANCE)))
+                    ImmutableSet.of(Accept.INSTANCE, Drop.INSTANCE),
+                    Query.INSTANCE)))
         .build();
   }
 }

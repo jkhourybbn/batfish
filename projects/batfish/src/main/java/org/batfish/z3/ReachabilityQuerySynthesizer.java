@@ -171,8 +171,7 @@ public class ReachabilityQuerySynthesizer extends BaseQuerySynthesizer {
             new BasicRuleStatement(
                 new AndExpr(
                     ImmutableList.of(
-                        CurrentIsOriginalExpr.INSTANCE,
-                        new HeaderSpaceMatchExpr(_headerSpace))),
+                        CurrentIsOriginalExpr.INSTANCE, new HeaderSpaceMatchExpr(_headerSpace))),
                 new OriginateVrf(ingressNode, ingressVrf)));
       }
     }
