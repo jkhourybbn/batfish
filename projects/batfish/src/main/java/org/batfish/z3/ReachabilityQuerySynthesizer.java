@@ -172,11 +172,11 @@ public class ReachabilityQuerySynthesizer extends BaseQuerySynthesizer {
                 new AndExpr(
                     ImmutableList.of(
                         CurrentIsOriginalExpr.INSTANCE,
-                        new HeaderSpaceMatchExpr(_headerSpace),
-                        SaneExpr.INSTANCE)),
+                        new HeaderSpaceMatchExpr(_headerSpace))),
                 new OriginateVrf(ingressNode, ingressVrf)));
       }
     }
+    queryConditionsBuilder.add(SaneExpr.INSTANCE);
     List<StateExpr> queryPreconditionPreTransformationStates =
         queryPreconditionPreTransformationStatesBuilder.build();
     BooleanExpr queryConditions = new AndExpr(queryConditionsBuilder.build());

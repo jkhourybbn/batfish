@@ -40,10 +40,10 @@ public class MultipathInconsistencyQuerySynthesizer extends BaseQuerySynthesizer
                     new AndExpr(
                         ImmutableList.of(
                             CurrentIsOriginalExpr.INSTANCE,
-                            SaneExpr.INSTANCE,
                             new HeaderSpaceMatchExpr(_headerSpace))),
                     new OriginateVrf(_hostname, _vrf)),
                 new BasicRuleStatement(
+                    SaneExpr.INSTANCE,
                     ImmutableSet.of(Accept.INSTANCE, Drop.INSTANCE), Query.INSTANCE)))
         .build();
   }

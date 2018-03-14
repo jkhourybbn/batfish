@@ -60,10 +60,10 @@ public class ReachEdgeQuerySynthesizer extends BaseQuerySynthesizer {
                     new AndExpr(
                         ImmutableList.of(
                             CurrentIsOriginalExpr.INSTANCE,
-                            new HeaderSpaceMatchExpr(_headerSpace),
-                            SaneExpr.INSTANCE)),
+                            new HeaderSpaceMatchExpr(_headerSpace))),
                     new OriginateVrf(_originationNode, _ingressVrf)),
                 new BasicRuleStatement(
+                    SaneExpr.INSTANCE,
                     queryPreconditionPreTransformationStates.build(), Query.INSTANCE)))
         .build();
   }
